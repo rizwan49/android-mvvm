@@ -1,0 +1,35 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_220"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/dp_12"
+    app:cardElevation="@dimen/dp_4"
+    app:cardCornerRadius="@dimen/dp_4"
+    android:layout_marginBottom="@dimen/dp_12"
+    android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/articlesImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/articles_image" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_bg" />
+
+    <TextView
+        android:id="@+id/articlesHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:gravity="bottom"
+        android:layout_margin="@dimen/dp_8"
+        style="@style/RobotoRegularTextLarge"
+        tools:text="news title " />
+
+</android.support.v7.widget.CardView>
