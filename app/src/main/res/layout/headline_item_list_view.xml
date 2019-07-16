@@ -1,5 +1,4 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_220"
     android:fitsSystemWindows="true"
@@ -10,26 +9,13 @@
     android:layout_marginBottom="@dimen/dp_12"
     android:foreground="?attr/selectableItemBackground">
 
-    <ImageView
-        android:id="@+id/articlesImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/articles_image" />
+    <include layout="@layout/background_with_image_layout" />
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient_bg" />
-
-    <TextView
-        android:id="@+id/articlesHeadline"
-        android:layout_width="wrap_content"
+    <include
         android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
-        android:gravity="bottom"
-        android:layout_margin="@dimen/dp_8"
-        style="@style/RobotoRegularTextLarge"
-        tools:text="news title " />
+        layout="@layout/item_sub_view"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom" />
+
 
 </android.support.v7.widget.CardView>

@@ -4,16 +4,22 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 
 public final class Utils {
     private static final String TAG = Utils.class.getName();
+    private static final SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private static final SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
 
     private Utils() {
 
@@ -57,7 +63,6 @@ public final class Utils {
 
         Picasso.with(context)
                 .load(url)
-                .fit()
                 .placeholder(placeHolder)
                 .error(errorImageDrawable)
                 .into(imageView);
@@ -81,6 +86,22 @@ public final class Utils {
             }
         }
         return false;
+    }
+
+    public static String getDateFormat(String unformatted) {
+        Date date = null;
+        String formattedDate = null;
+        try {
+            date = input.parse(unformatted);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null) {
+            formattedDate = output.format(date);
+            Log.i(TAG, "" + formattedDate);
+            return output.format(date);
+        }
+        return "";
     }
 
 }

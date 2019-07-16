@@ -2,6 +2,7 @@ package com.ar.newsapp.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import java.util.List;
  * 4. add click listener
  */
 
-public class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHeadlinesAdapter.MyViewHolder> {
+public abstract class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHeadlinesAdapter.MyViewHolder> {
     private final ListItemOnClickListener mOnClickListener;
     private List<NewsArticles> list;
 
@@ -37,11 +38,11 @@ public class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHeadlinesAdap
      * @param mList contains latest list which is fetched based on page wise;
      */
     public void addAllItem(final List<NewsArticles> mList) {
-        if (list == null && mList != null && mList.size() > 0) {
+        if (list == null) {
             list = new ArrayList<>();
-            list.addAll(mList);
-            this.notifyDataSetChanged();
         }
+        list.addAll(mList);
+        this.notifyDataSetChanged();
     }
 
     /***
@@ -65,7 +66,13 @@ public class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHeadlinesAdap
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         holder.bindView(position);
+        if (position >= getItemCount() - 1) {
+            loadMore();
+        }
     }
+
+    public abstract void loadMore();
+
 
     @Override
     public int getItemCount() {
@@ -83,7 +90,7 @@ public class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHeadlinesAdap
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView headlineImage;
-        TextView headlineTitle;
+        TextView headlineTitle, source, articlePublishedAt;
 
         MyViewHolder(View view) {
             super(view);
@@ -93,12 +100,27 @@ public class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHeadlinesAdap
         private void init(View view) {
             headlineTitle = view.findViewById(R.id.articlesHeadline);
             headlineImage = view.findViewById(R.id.articlesImage);
+            source = view.findViewById(R.id.source);
+            articlePublishedAt = view.findViewById(R.id.articlePublishedAt);
             itemView.setOnClickListener(this);
         }
 
         private void bindView(int position) {
             Utils.loadImage(itemView.getContext(), headlineImage, list.get(position).getUrlToImage(), R.drawable.ic_place_holder, R.drawable.ic_place_holder);
             headlineTitle.setText(list.get(position).getTitle());
+            if (TextUtils.isEmpty(list.get(position).getAuthor()))
+                source.setVisibility(View.GONE);
+            else {
+                source.setVisibility(View.VISIBLE);
+                source.setText(list.get(position).getAuthor());
+            }
+
+            if (TextUtils.isEmpty(list.get(position).getPublishedAt()))
+                articlePublishedAt.setVisibility(View.GONE);
+            else {
+                articlePublishedAt.setVisibility(View.VISIBLE);
+                articlePublishedAt.setText(Utils.getDateFormat(list.get(position).getPublishedAt()));
+            }
         }
 
         @Override

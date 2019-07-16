@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class NewsModel {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     private int id;
 
     @SerializedName("status")

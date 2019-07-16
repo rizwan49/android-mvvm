@@ -1,11 +1,15 @@
 package com.ar.newsapp.network.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 @Entity
-public class NewsArticles {
+public class NewsArticles implements Parcelable {
+
     @SerializedName("author")
     String author;
 
@@ -22,6 +26,7 @@ public class NewsArticles {
     @SerializedName("urlToImage")
     String urlToImage;
 
+    @PrimaryKey
     @SerializedName("publishedAt")
     String publishedAt;
 
@@ -84,4 +89,46 @@ public class NewsArticles {
     public void setContent(String content) {
         this.content = content;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.author);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeString(this.url);
+        dest.writeString(this.urlToImage);
+        dest.writeString(this.publishedAt);
+        dest.writeString(this.content);
+    }
+
+    public NewsArticles() {
+    }
+
+    protected NewsArticles(Parcel in) {
+        this.author = in.readString();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.url = in.readString();
+        this.urlToImage = in.readString();
+        this.publishedAt = in.readString();
+        this.content = in.readString();
+    }
+
+    public static final Parcelable.Creator<NewsArticles> CREATOR = new Parcelable.Creator<NewsArticles>() {
+        @Override
+        public NewsArticles createFromParcel(Parcel source) {
+            return new NewsArticles(source);
+        }
+
+        @Override
+        public NewsArticles[] newArray(int size) {
+            return new NewsArticles[size];
+        }
+    };
 }

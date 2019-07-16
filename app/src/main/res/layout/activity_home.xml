@@ -7,36 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".activities.detail.DetailActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <include layout="@layout/toolbar" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:fitsSystemWindows="true">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapseToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentScrim="@color/textPrimaryColor"
-            app:expandedTitleGravity="bottom|center_horizontal"
-            />
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:titleTextColor="@color/textPrimaryColor" />
-        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_96"
+        android:padding="180dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingStart="@dimen/dp_16"
         android:paddingEnd="@dimen/dp_16"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

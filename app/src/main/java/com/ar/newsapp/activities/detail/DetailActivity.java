@@ -1,4 +1,78 @@
 package com.ar.newsapp.activities.detail;
 
-public class DetailActivity {
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.ar.newsapp.R;
+import com.ar.newsapp.Utils;
+import com.ar.newsapp.network.model.NewsArticles;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class DetailActivity extends AppCompatActivity {
+
+    private static final String SELECTED_ARTICLES_INFO = "SELECTED_ARTICLES_INFO";
+
+    @BindView(R.id.articlesImage)
+    ImageView mImageView;
+    @BindView(R.id.source)
+    TextView source;
+    @BindView(R.id.publishedAt)
+    TextView publishedAt;
+    @BindView(R.id.information)
+    TextView information;
+
+    @BindView(R.id.title)
+    TextView title;
+
+    private DetailViewModel viewModel;
+
+    public static void initiateDetailActivity(Context context, NewsArticles selectedObject, View view) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(SELECTED_ARTICLES_INFO, selectedObject);
+        context.startActivity(intent);
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
+        ButterKnife.bind(this);
+        viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
+        viewModel.init(getIntent().getParcelableExtra(SELECTED_ARTICLES_INFO));
+
+        if (viewModel.getSelectedArticlesInfo() == null) {
+            finish();
+            return;
+        }
+
+        setupOnUI();
+    }
+
+    private void setupOnUI() {
+        NewsArticles articles = viewModel.getSelectedArticlesInfo();
+        Utils.loadImage(this, mImageView, articles.getUrlToImage(), R.drawable.ic_place_holder, R.drawable.ic_broken_image);
+        title.setText(articles.getTitle().trim());
+        if (!TextUtils.isEmpty(articles.getAuthor())) {
+            source.setText(articles.getAuthor().trim());
+        }
+
+        if (!TextUtils.isEmpty(articles.getPublishedAt())) {
+            publishedAt.setText(Utils.getDateFormat(articles.getPublishedAt()));
+        }
+
+        if (!TextUtils.isEmpty(articles.getContent()))
+            information.setText(articles.getContent());
+    }
+
+
 }

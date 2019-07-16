@@ -9,5 +9,12 @@
     <dimen name="sp_20">20sp</dimen>
     <dimen name="dp_12">12dp</dimen>
     <dimen name="dp_220">220dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_96">96dp</dimen>
+    <dimen name="dp_76">76dp</dimen>
+    <dimen name="dp_22">22dp</dimen>
+    <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="angle_80">80dp</dimen>
     <dimen name="angle_90">90</dimen>
 </resources>
