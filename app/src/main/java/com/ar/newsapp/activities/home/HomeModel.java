@@ -5,8 +5,12 @@ import android.util.Log;
 
 import com.ar.newsapp.database.NewsDao;
 import com.ar.newsapp.network.RestClient;
+import com.ar.newsapp.network.model.NewsArticles;
 import com.ar.newsapp.network.model.NewsModel;
 
+import java.util.List;
+
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit2.Call;
@@ -24,6 +28,7 @@ public class HomeModel {
     private int receivedCount;
     private boolean isLoadCompleted;
 
+    @Inject
     public HomeModel(NewsDao newsDao, RestClient restClient) {
         this.newsDao = newsDao;
         this.restClient = restClient;
@@ -33,7 +38,7 @@ public class HomeModel {
         receivedCount = 0;
     }
 
-    public LiveData<NewsModel> getAllArticles() {
+    public LiveData<List<NewsArticles>> getAllArticles() {
         refreshNewsList();
         // Returns a LiveData object directly from the database.
 
@@ -56,7 +61,7 @@ public class HomeModel {
                     if (receivedCount >= totalResult) {
                         isLoadCompleted = true;
                     }
-                    new Thread(() -> newsDao.insertList(response.body())).start();
+                    new Thread(() -> newsDao.insertList(response.body().getArticlesList())).start();
                     Log.d(TAG, "after pageCount:" + page + " totalCount:" + totalResult + " TotalReceivedCount:" + receivedCount + " isLoadCompleted:" + isLoadCompleted);
 
                 }

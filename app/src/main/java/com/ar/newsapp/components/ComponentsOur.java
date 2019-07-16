@@ -6,9 +6,10 @@ import com.ar.newsapp.activities.home.HomeModel;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.Module;
 
-@Singleton
-@Component(modules = HomeModel.class)
-public interface DaggerComponents {
+
+@Module
+public interface ComponentsOur {
     void inject(HomeActivity mainActivity);
 }

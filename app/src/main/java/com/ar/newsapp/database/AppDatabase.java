@@ -4,10 +4,10 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
-import com.ar.newsapp.network.model.NewsModel;
+import com.ar.newsapp.network.model.NewsArticles;
 
-@Database(entities = {NewsModel.class}, version = 1, exportSchema = false)
-@TypeConverters({ArticlesConverter.class})
+@Database(entities = {NewsArticles.class}, version = 1, exportSchema = false)
+@TypeConverters({SourceConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract NewsDao recipeDao();
+    public abstract NewsDao newsDao();
 }

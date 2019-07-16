@@ -2,20 +2,26 @@ package com.ar.newsapp.network.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+import com.ar.newsapp.database.SourceConverter;
 import com.google.gson.annotations.SerializedName;
 
 @Entity
 public class NewsArticles implements Parcelable {
+
+    @TypeConverters(SourceConverter.class)
+    @SerializedName("source")
+    NewsSource source;
 
     @SerializedName("author")
     String author;
 
     @SerializedName("title")
     String title;
-
 
     @SerializedName("description")
     String description;
@@ -26,7 +32,8 @@ public class NewsArticles implements Parcelable {
     @SerializedName("urlToImage")
     String urlToImage;
 
-    @PrimaryKey
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("publishedAt")
     String publishedAt;
 
@@ -90,6 +97,27 @@ public class NewsArticles implements Parcelable {
         this.content = content;
     }
 
+    public NewsArticles() {
+    }
+
+    protected NewsArticles(Parcel in) {
+        this.source = in.readParcelable(NewsSource.class.getClassLoader());
+        this.author = in.readString();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.url = in.readString();
+        this.urlToImage = in.readString();
+        this.publishedAt = in.readString();
+        this.content = in.readString();
+    }
+
+    public NewsSource getSource() {
+        return source;
+    }
+
+    public void setSource(NewsSource source) {
+        this.source = source;
+    }
 
     @Override
     public int describeContents() {
@@ -98,6 +126,7 @@ public class NewsArticles implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.source, flags);
         dest.writeString(this.author);
         dest.writeString(this.title);
         dest.writeString(this.description);
@@ -105,19 +134,6 @@ public class NewsArticles implements Parcelable {
         dest.writeString(this.urlToImage);
         dest.writeString(this.publishedAt);
         dest.writeString(this.content);
-    }
-
-    public NewsArticles() {
-    }
-
-    protected NewsArticles(Parcel in) {
-        this.author = in.readString();
-        this.title = in.readString();
-        this.description = in.readString();
-        this.url = in.readString();
-        this.urlToImage = in.readString();
-        this.publishedAt = in.readString();
-        this.content = in.readString();
     }
 
     public static final Parcelable.Creator<NewsArticles> CREATOR = new Parcelable.Creator<NewsArticles>() {

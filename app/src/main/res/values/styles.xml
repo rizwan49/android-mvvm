@@ -7,7 +7,7 @@
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/white</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:textColorPrimary">@color/textPrimaryColor</item>
         <item name="android:textColorSecondary">@color/textSecondaryColor</item>

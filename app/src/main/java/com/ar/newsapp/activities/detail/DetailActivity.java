@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +31,9 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.information)
     TextView information;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @BindView(R.id.title)
     TextView title;
 
@@ -54,16 +58,26 @@ public class DetailActivity extends AppCompatActivity {
             finish();
             return;
         }
-
+        setupToolbar();
         setupOnUI();
     }
+
+
+    private void setupToolbar() {
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
+    }
+
 
     private void setupOnUI() {
         NewsArticles articles = viewModel.getSelectedArticlesInfo();
         Utils.loadImage(this, mImageView, articles.getUrlToImage(), R.drawable.ic_place_holder, R.drawable.ic_broken_image);
         title.setText(articles.getTitle().trim());
-        if (!TextUtils.isEmpty(articles.getAuthor())) {
-            source.setText(articles.getAuthor().trim());
+        if (!TextUtils.isEmpty(articles.getSource().getName())) {
+            source.setText(articles.getSource().getName().trim());
         }
 
         if (!TextUtils.isEmpty(articles.getPublishedAt())) {

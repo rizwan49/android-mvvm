@@ -108,24 +108,30 @@ public abstract class NewsHeadlinesAdapter extends RecyclerView.Adapter<NewsHead
         private void bindView(int position) {
             Utils.loadImage(itemView.getContext(), headlineImage, list.get(position).getUrlToImage(), R.drawable.ic_place_holder, R.drawable.ic_place_holder);
             headlineTitle.setText(list.get(position).getTitle());
-            if (TextUtils.isEmpty(list.get(position).getAuthor()))
-                source.setVisibility(View.GONE);
-            else {
-                source.setVisibility(View.VISIBLE);
-                source.setText(list.get(position).getAuthor());
-            }
 
-            if (TextUtils.isEmpty(list.get(position).getPublishedAt()))
-                articlePublishedAt.setVisibility(View.GONE);
-            else {
-                articlePublishedAt.setVisibility(View.VISIBLE);
-                articlePublishedAt.setText(Utils.getDateFormat(list.get(position).getPublishedAt()));
-            }
+            setupInformation(list.get(position).getSource().getName(), source, false);
+            setupInformation(list.get(position).getPublishedAt(), articlePublishedAt, true);
         }
 
         @Override
         public void onClick(View v) {
             mOnClickListener.onListItemClick(list.get(getAdapterPosition()), v.findViewById(R.id.articlesImage));
         }
+
+        private void setupInformation(String info, TextView source, boolean isDateView) {
+            if (TextUtils.isEmpty(info)) {
+                source.setVisibility(View.GONE);
+                return;
+            }
+
+            source.setVisibility(View.VISIBLE);
+            if (isDateView)
+                source.setText(Utils.getDateFormat(info));
+            else
+                source.setText(info.trim());
+
+        }
     }
+
+
 }

@@ -6,23 +6,25 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.ar.newsapp.network.model.NewsModel;
+import com.ar.newsapp.network.model.NewsArticles;
+
+import java.util.List;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface NewsDao {
 
-    @Query("SELECT * FROM newsmodel")
-    LiveData<NewsModel> getAll();
+    @Query("SELECT * FROM newsarticles")
+    LiveData<List<NewsArticles>> getAll();
 
     @Insert(onConflict = REPLACE)
-    void insertAll(NewsModel... newsModels);
+    void insertAll(NewsArticles... newsArticles);
 
     @Delete
-    void delete(NewsModel newsModel);
+    void delete(List<NewsArticles> newsArticles);
 
     @Insert(onConflict = REPLACE)
-    void insertList(NewsModel newsModel);
+    void insertList(List<NewsArticles> newsArticles);
 
 }

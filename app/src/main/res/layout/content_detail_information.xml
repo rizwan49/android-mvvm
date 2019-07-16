@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <include layout="@layout/background_with_image_layout" />
 
     <android.support.v4.widget.NestedScrollView
@@ -21,4 +23,11 @@
         <include layout="@layout/content_view" />
     </android.support.v4.widget.NestedScrollView>
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="top"
+
+        android:layout_marginTop="@dimen/dp_22" />
 </android.support.design.widget.CoordinatorLayout>

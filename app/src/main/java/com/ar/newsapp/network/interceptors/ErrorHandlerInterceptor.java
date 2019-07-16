@@ -35,6 +35,7 @@ public class ErrorHandlerInterceptor implements Interceptor {
 
         if (!Utils.isNetworkAvailable(context)) {
             Log.d(TAG, "errorHandler:internet issue");
+            EventBus.getDefault().post(ErrorCode.INTERNET_ERROR);
             throw new NoConnectivityException(context);
         }
 

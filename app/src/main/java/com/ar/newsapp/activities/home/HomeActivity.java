@@ -15,13 +15,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ar.newsapp.R;
 import com.ar.newsapp.SimpleIdlingResource;
 import com.ar.newsapp.Utils;
 import com.ar.newsapp.activities.detail.DetailActivity;
 import com.ar.newsapp.adapters.NewsHeadlinesAdapter;
+import com.ar.newsapp.network.interceptors.ErrorCode;
 import com.ar.newsapp.network.model.NewsArticles;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -87,11 +93,35 @@ public class HomeActivity extends AppCompatActivity implements NewsHeadlinesAdap
     private void setupObserver() {
         viewModel.getArticlesList().observe(this, newsResponse -> {
             if (newsResponse != null) {
-                adapter.addAllItem(newsResponse.getArticlesList());
+                adapter.addAllItem(newsResponse);
                 Utils.hideViews(progressBar);
                 mIdlingResource.setIdleState(true);
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Integer event) {
+        Utils.hideViews(progressBar);
+        switch (event) {
+            case ErrorCode.INTERNET_ERROR:
+                Toast.makeText(this, getString(R.string.no_connectivity_exception_msg), Toast.LENGTH_LONG).show();
+                break;
+            default:
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     private void bindAdapter() {

@@ -5,17 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.detail.DetailActivity">
+    tools:context=".activities.home.HomeActivity">
 
     <include layout="@layout/toolbar" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_96"
-        android:padding="180dp" />
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:layout_gravity="center" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
