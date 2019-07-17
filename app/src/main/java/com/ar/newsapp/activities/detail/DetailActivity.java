@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
         viewModel.init(getIntent().getParcelableExtra(SELECTED_ARTICLES_INFO));
 
-        if (viewModel.getSelectedArticlesInfo() == null) {
+        if (viewModel.isSharedObjectNull()) {
             finish();
             return;
         }
@@ -76,17 +75,17 @@ public class DetailActivity extends AppCompatActivity {
         NewsArticles articles = viewModel.getSelectedArticlesInfo();
         Utils.loadImage(this, mImageView, articles.getUrlToImage(), R.drawable.ic_place_holder, R.drawable.ic_broken_image);
         title.setText(articles.getTitle().trim());
-        if (!TextUtils.isEmpty(articles.getSource().getName())) {
+
+        if (!viewModel.isStringEmpty(articles.getSource().getName())) {
             source.setText(articles.getSource().getName().trim());
         }
 
-        if (!TextUtils.isEmpty(articles.getPublishedAt())) {
+        if (!viewModel.isStringEmpty(articles.getPublishedAt())) {
             publishedAt.setText(Utils.getDateFormat(articles.getPublishedAt()));
         }
 
-        if (!TextUtils.isEmpty(articles.getContent()))
+        if (!viewModel.isStringEmpty(articles.getContent()))
             information.setText(articles.getContent());
     }
-
 
 }

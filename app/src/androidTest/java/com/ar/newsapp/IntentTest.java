@@ -2,7 +2,7 @@ package com.ar.newsapp;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
@@ -10,11 +10,9 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.ar.newsapp.activities.home.HomeActivity;
 import com.ar.newsapp.activities.detail.DetailActivity;
+import com.ar.newsapp.activities.home.HomeActivity;
 
-import static android.support.test.espresso.intent.Intents.intending;
-import static org.hamcrest.Matchers.not;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,8 +22,10 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.isInternal;
+import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -40,7 +40,7 @@ public class IntentTest {
     public void registerIdlingResource() {
         mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
         // To prove that the test fails, omit this call:
-        Espresso.registerIdlingResources(mIdlingResource);
+        IdlingRegistry.getInstance().register(mIdlingResource);
     }
 
     @Before
@@ -62,7 +62,7 @@ public class IntentTest {
     @After
     public void unregisterIdlingResource() {
         if (mIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mIdlingResource);
+            IdlingRegistry.getInstance().unregister(mIdlingResource);
         }
     }
 }

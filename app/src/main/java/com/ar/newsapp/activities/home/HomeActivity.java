@@ -1,7 +1,6 @@
 package com.ar.newsapp.activities.home;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -92,11 +91,11 @@ public class HomeActivity extends AppCompatActivity implements NewsHeadlinesAdap
 
     private void setupObserver() {
         viewModel.getArticlesList().observe(this, newsResponse -> {
-            if (newsResponse != null) {
+            if (viewModel.isResponseNotNull(newsResponse)) {
                 adapter.addAllItem(newsResponse);
-                Utils.hideViews(progressBar);
                 mIdlingResource.setIdleState(true);
             }
+            Utils.hideViews(progressBar);
         });
     }
 
@@ -132,14 +131,9 @@ public class HomeActivity extends AppCompatActivity implements NewsHeadlinesAdap
                 viewModel.doNetworkCall();
             }
         };
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            layoutManager = new GridLayoutManager(this, 2);
-            // In landscape
-        } else {
-            // In portrait
-            layoutManager = new GridLayoutManager(this, 1);
-        }
+
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);

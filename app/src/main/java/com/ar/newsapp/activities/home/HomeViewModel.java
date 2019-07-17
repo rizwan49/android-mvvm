@@ -15,15 +15,10 @@ public class HomeViewModel extends ViewModel {
 
     private LiveData<List<NewsArticles>> newLiveData;
     private HomeModel articlesRepo;
-//    private NewsDao dao;
 
-    // Instructs Dagger 2 to provide the UserRepository parameter.
     @Inject
     public HomeViewModel() {
         articlesRepo = DaggerComponentsOur.create().getHomeModel();
-
-//        dao = DataBaseHelper.getInstance().newsDao();
-//        this.articlesRepo = new HomeModel(dao, new RestClient());
     }
 
 
@@ -40,5 +35,9 @@ public class HomeViewModel extends ViewModel {
 
     public void doNetworkCall() {
         articlesRepo.refreshNewsList();
+    }
+
+    public boolean isResponseNotNull(List<NewsArticles> list) {
+        return list != null;
     }
 }
