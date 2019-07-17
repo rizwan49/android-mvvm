@@ -1,15 +1,13 @@
 package com.ar.newsapp.components;
 
-import com.ar.newsapp.activities.home.HomeActivity;
 import com.ar.newsapp.activities.home.HomeModel;
-
-import javax.inject.Singleton;
+import com.ar.newsapp.database.AppDatabase;
+import com.ar.newsapp.database.NewsDao;
 
 import dagger.Component;
-import dagger.Module;
 
 
-@Module
+@Component(modules = {AppDatabase.class, NewsDao.class})
 public interface ComponentsOur {
-    void inject(HomeActivity mainActivity);
+    HomeModel getHomeModel();
 }

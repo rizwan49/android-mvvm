@@ -10,8 +10,11 @@ import com.ar.newsapp.network.model.NewsArticles;
 
 import java.util.List;
 
+import dagger.Module;
+
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
+@Module
 @Dao
 public interface NewsDao {
 

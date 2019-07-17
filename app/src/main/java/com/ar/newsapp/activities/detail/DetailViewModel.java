@@ -1,6 +1,5 @@
 package com.ar.newsapp.activities.detail;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.ar.newsapp.network.model.NewsArticles;

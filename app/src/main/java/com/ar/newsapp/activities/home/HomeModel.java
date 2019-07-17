@@ -3,6 +3,7 @@ package com.ar.newsapp.activities.home;
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
+import com.ar.newsapp.database.DataBaseHelper;
 import com.ar.newsapp.database.NewsDao;
 import com.ar.newsapp.network.RestClient;
 import com.ar.newsapp.network.model.NewsArticles;
@@ -11,26 +12,24 @@ import com.ar.newsapp.network.model.NewsModel;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@Singleton
 public class HomeModel {
 
     private static final String TAG = "HomeModel";
     private final NewsDao newsDao;
     private final RestClient restClient;
-    private int page = 0;
+    private int page;
     private int totalResult;
     private int receivedCount;
     private boolean isLoadCompleted;
 
     @Inject
-    public HomeModel(NewsDao newsDao, RestClient restClient) {
-        this.newsDao = newsDao;
+    public HomeModel(RestClient restClient) {
+        this.newsDao = DataBaseHelper.getInstance().newsDao();
         this.restClient = restClient;
         this.isLoadCompleted = false;
         page = 0;
@@ -72,7 +71,6 @@ public class HomeModel {
                 Log.e("Error","failed"+t.getMessage());
             }
         });
-        // Check for errors here.
 
     }
 }

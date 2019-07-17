@@ -4,9 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.ar.newsapp.database.DataBaseHelper;
-import com.ar.newsapp.database.NewsDao;
-import com.ar.newsapp.network.RestClient;
+import com.ar.newsapp.components.DaggerComponentsOur;
 import com.ar.newsapp.network.model.NewsArticles;
 
 import java.util.List;
@@ -17,12 +15,15 @@ public class HomeViewModel extends ViewModel {
 
     private LiveData<List<NewsArticles>> newLiveData;
     private HomeModel articlesRepo;
-    private NewsDao dao;
+//    private NewsDao dao;
 
     // Instructs Dagger 2 to provide the UserRepository parameter.
+    @Inject
     public HomeViewModel() {
-        dao = DataBaseHelper.getInstance().newsDao();
-        this.articlesRepo = new HomeModel(dao, new RestClient());
+        articlesRepo = DaggerComponentsOur.create().getHomeModel();
+
+//        dao = DataBaseHelper.getInstance().newsDao();
+//        this.articlesRepo = new HomeModel(dao, new RestClient());
     }
 
 

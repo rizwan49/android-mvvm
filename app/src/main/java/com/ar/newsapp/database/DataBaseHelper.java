@@ -4,13 +4,14 @@ import android.arch.persistence.room.Room;
 
 import com.ar.newsapp.AppApplication;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class DataBaseHelper {
     private static final String DB_NAME = "news_db";
     private final static String TAG = DataBaseHelper.class.getName();
     private static AppDatabase db;
-
-    private DataBaseHelper() {
-    }
 
     /***
      *

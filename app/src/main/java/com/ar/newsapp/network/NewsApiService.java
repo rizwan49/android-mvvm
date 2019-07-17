@@ -2,6 +2,7 @@ package com.ar.newsapp.network;
 
 import com.ar.newsapp.network.model.NewsModel;
 
+import dagger.Provides;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
